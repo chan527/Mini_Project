@@ -9,9 +9,12 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private SpriteRenderer sr;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -46,6 +49,15 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDir = moveDir.normalized;
+
+        if (moveDir.x < 0)
+        {
+            sr.flipX = true;
+        }
+        else if (moveDir.x > 0)
+        {
+            sr.flipX = false;
+        }
     }
 
     private void Move()

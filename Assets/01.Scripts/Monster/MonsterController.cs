@@ -10,9 +10,12 @@ public class MonsterController : MonoBehaviour
 
     Rigidbody2D rb;
 
+    SpriteRenderer sr;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -25,10 +28,24 @@ public class MonsterController : MonoBehaviour
         Move();
     }
 
+    public void SetTarget(Transform player)
+    {
+        target = player;
+    }
+
     private void SetMoveDirection()
     {
         moveDir = target.position - transform.position;
         moveDir = moveDir.normalized;
+
+        if (moveDir.x < 0)
+        {
+            sr.flipX = true;
+        }
+        else if (moveDir.x > 0)
+        {
+            sr.flipX = false;
+        }
     }
 
     private void Move()
