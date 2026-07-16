@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4767986511829222641}
   - component: {fileID: 9106897986971740294}
   - component: {fileID: 8690570697128423586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,6 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterController
   target: {fileID: 0}
+  maxHp: 0
+  currentHp: 0
   moveSpeed: 1
 --- !u!50 &9106897986971740294
 Rigidbody2D:
