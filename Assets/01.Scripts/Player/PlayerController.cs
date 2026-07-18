@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-
+        GameManager.instance.GameOver();
     }
 
     private void SetHp(float finalHp)

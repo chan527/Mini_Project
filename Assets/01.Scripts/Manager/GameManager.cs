@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,8 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] private float survivalTime;
-    private float timeUpdateInterval;
+    [SerializeField] private int survivalTime;
+    private int timeUpdateInterval;
 
     private bool isPlaying;
 
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
     private WaitForSeconds updateTimeWait;
 
     private Coroutine timeUpdateRoutine;
+
+    public int SurvivalTime => survivalTime;
+
+    public event Action<int> SurvivalTimeUpdated;
 
     void Awake()
     {
@@ -27,18 +32,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        survivalTime = 0f;
-        timeUpdateInterval = 0.1f;
+        survivalTime = 0;
+        timeUpdateInterval = 1;
 
         isPlaying = false;
 
         waitUntilPlaying = new WaitUntil(() => isPlaying);
         updateTimeWait = new WaitForSeconds(timeUpdateInterval);
+
+        GameStart();
     }
 
     public void GameStart()
     {
-        survivalTime = 0f;
+        survivalTime = 0;
 
         isPlaying = true;
 
@@ -61,7 +68,9 @@ public class GameManager : MonoBehaviour
         StopCoroutine(timeUpdateRoutine);
         timeUpdateRoutine = null;
 
-        //UIManager.instance.ShowResultUI();
+        Time.timeScale = 0f;
+
+        UIManager.instance.ShowResultPopup();
     }
 
     IEnumerator UpdateSurvivalTimeCoroutine()
@@ -80,6 +89,6 @@ public class GameManager : MonoBehaviour
     {
         survivalTime += timeUpdateInterval;
 
-        //UIManager.instace.UpdateSurvivalTimeUI(survivalTime);
+        SurvivalTimeUpdated?.Invoke(survivalTime);
     }
 }
